@@ -20,9 +20,11 @@ Assumption is that the machine that's running this program has pip and python in
 ``yarn add pandas``
 
 If above doesn't work then:
+
 ``pip install pandas``
 
 ``python what_to_cook.py``
+
 
 
 It will give the output of either the recipe name or call for takeout. Otherwise it'll throw
