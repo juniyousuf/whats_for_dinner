@@ -4,9 +4,7 @@ import pyspark as spark
 import pyspark.sql.functions as F
 import json
 from datetime import date
-
-
-from src.validator.validate_csv import validate_csv_data
+from validator.validate_csv import validate_csv_data
 
 
 def getRecipes(recipes_path):
