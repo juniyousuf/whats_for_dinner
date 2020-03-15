@@ -28,5 +28,25 @@
                 "unit-of-measure": "grams"
             }
         ]
+    },
+    {
+        "name": "Vegemite Butter Sandwich",
+        "ingredients": [
+            {
+                "item": "bread",
+                "quantity": "2",
+                "unit-of-measure": "slices"
+            },
+            {
+                "item": "vegemite",
+                "quantity": "100",
+                "unit-of-measure": "grams"
+            },
+            {
+                "item": "butter",
+                "quantity": "150",
+                "unit-of-measure": "grams"
+            }
+        ]
     }
 ]

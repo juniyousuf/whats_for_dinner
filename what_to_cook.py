@@ -1,9 +1,9 @@
 import pandas
 from pandas.io.json import json_normalize
-import time
 import pyspark as spark
 import pyspark.sql.functions as F
 import json
+from datetime import date
 
 
 from src.validator.validate_csv import validate_csv_data
@@ -22,6 +22,7 @@ def getRecipes(recipes_path):
     recipes=recipes.drop('ingredients',1)
     return (recipes.drop_duplicates(keep='first',inplace=False))
 
+
 def getIngredients(ingredients_path):
     try:
         ingredients = pandas.read_csv(ingredients_path)
@@ -34,6 +35,19 @@ def getIngredients(ingredients_path):
     return ingredients_validated
 
 
+def whatsForDinner(ingredients, recipes):
+    today = (date.today()).strftime("%d/%m/%Y")
+    
+    result=pandas.merge(left=ingredients, how='right', right=recipes, left_on='Item', right_on='item')
+    result["Use By Date"]=pandas.to_datetime(result["Use By Date"].fillna("01/01/2000"))
+    result = result.loc[result.groupby('name')["Use By Date"].idxmin()]
+    result=(result.where(result["Use By Date"]>=today)).dropna()
+
+    if(result['name'].count() < 1):
+        return "Call for takeout"
+    return result.iloc[0]['name']
+
+
 if __name__== "__main__":
     
     ingredients_path="./source_files/my-fridge.csv"
@@ -42,10 +56,4 @@ if __name__== "__main__":
     ingredients=getIngredients(ingredients_path)
     recipes=getRecipes(recipes_path)
 
-    
-
-    print(ingredients)
-    print("================")
-    print(recipes)
-    print("================")
-    # result=pandas.merge()
+    print(whatsForDinner(ingredients, recipes))
