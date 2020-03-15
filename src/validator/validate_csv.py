@@ -16,7 +16,7 @@ def validate_csv_data(df):
 
     is_quantity_correct = (df["Quantity"].fillna(0) % 2  >= 0).all()
 
-    if((df[df["Use By Date"] >= date_today]).count < 1):
+    if(((df[df["Use By Date"] >= date_today]))['Item'].count() < 1):
         return 'Nothing in the fridge to consume'
     elif (is_measure_unit_correct is False):
         return 'Invalid item measurement unit in the file'
